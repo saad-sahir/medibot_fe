@@ -19,7 +19,7 @@ function sendMessage() {
 
         document.getElementById('user-input').value = '';
 
-        fetch('https://medibot-tdf2.onrender.com/chat', {
+        fetch('https://test-api-etok.onrender.com/chat', {
             method:"POST",
             headers: {
                 'Content-Type':'application/json',
