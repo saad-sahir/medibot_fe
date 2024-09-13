@@ -81,7 +81,7 @@ function testAPI() {
         stressMessageDiv.textContent = "Stress testing...";
         chatBox.appendChild(stressMessageDiv);
         const interval = setInterval(() => {
-            fetch('https://test-api-etok.onrender.com/test', {
+            fetch('https://test-api-etok.onrender.com/stress_test', {
                 method: "POST",
                 headers: {'Content-Type': 'application/json',},
                 body: JSON.stringify({ query: "Request testing" })
