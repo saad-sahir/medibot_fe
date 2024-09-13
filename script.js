@@ -46,23 +46,17 @@ function sendMessage() {
 
 function testAPI() {
     const userInput = document.getElementById('user-input').value;
-
+    const chatBox = document.getElementById('chat-box');
     if (userInput.trim() !== "") {
-        const chatBox = document.getElementById('chat-box');
-
         const userMessageDiv = document.createElement('div');
         userMessageDiv.classList.add('message');
         userMessageDiv.textContent = userInput;
-
         chatBox.appendChild(userMessageDiv);
-
         document.getElementById('user-input').value = '';
-
+        
         fetch('https://test-api-etok.onrender.com/test', {
             method:"POST",
-            headers: {
-                'Content-Type':'application/json',
-            },
+            headers: {'Content-Type':'application/json',},
             body: JSON.stringify({query: userInput})
         })
         .then(response => response.json())
@@ -89,9 +83,7 @@ function testAPI() {
         const interval = setInterval(() => {
             fetch('https://test-api-etok.onrender.com/test', {
                 method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: {'Content-Type': 'application/json',},
                 body: JSON.stringify({ query: "Request testing" })
             })
             .then(response => response.json())
