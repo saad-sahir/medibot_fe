@@ -80,5 +80,29 @@ function testAPI() {
             errorMessageDiv.textContent = "Error: Couldn't connect to the server.";
             chatBox.appendChild(errorMessageDiv);
         })
+    } else if (userInput === "") {
+        let c = 1;
+        const interval = setInterval(() => {
+            fetch('https://test-api-etok.onrender.com/test', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ query: "Request testing" })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Request " + c);
+                c += 1;
+            })
+            .catch(error => {
+                console.error("Error: ", error);
+                clearInterval(interval);
+                const stressMessageDiv = document.createElement('div');
+                stressMessageDiv.classList.add('message');
+                stressMessageDiv.textContent = `${c - 1} requests were made before an error occurred.`;
+                chatBox.appendChild(stressMessageDiv);
+            });
+        }, 300)
     }
 }
