@@ -80,22 +80,34 @@ function testAPI() {
         stressMessageDiv.classList.add('test_message');
         stressMessageDiv.textContent = "Stress testing...";
         chatBox.appendChild(stressMessageDiv);
-        const interval = setInterval(() => {
-            fetch('https://test-api-etok.onrender.com/stress_test', {
-                method: "POST",
-                headers: {'Content-Type': 'application/json',},
-                body: JSON.stringify({ query: "Request testing" })
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log("Request " + c);
+
+        async function sendTestRequest() {
+            try {
+                const response = await fetch("https://test-api-etok.onrender.com/stress_test", {
+                    method: "POST",
+                    headers: {'Content-Type': 'application/json',},
+                    body: JSON.stringify({ query: "Request testing" })
+                });
+                const data = await response.json()
+                console.log("Request"+c);
                 c += 1;
-            })
-            .catch(error => {
+                return true;
+            } catch (error) {
                 console.error("Error: ", error);
-                clearInterval(interval);
-                stressMessageDiv.textContent = `${c - 1} requests were made before an error occurred.`;
-            });
-        }, 200)
+                return false;
+            }
+        }
+
+        async function runStressTest() {
+            while (true) {
+                const success = await sendTestRequest();
+                if (!success) {
+                    stressMessageDiv.textContent = `${c - 1} requests were made before an error occurred.`;
+                    break; 
+                }
+            }
+        }
+
+        runStressTest()
     }
 }
