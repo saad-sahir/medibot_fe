@@ -96,6 +96,6 @@ function testAPI() {
                 clearInterval(interval);
                 stressMessageDiv.textContent = `${c - 1} requests were made before an error occurred.`;
             });
-        }, 50)
+        }, 200)
     }
 }
