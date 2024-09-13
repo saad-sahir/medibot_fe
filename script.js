@@ -82,6 +82,10 @@ function testAPI() {
         })
     } else if (userInput === "") {
         let c = 1;
+        const stressMessageDiv = document.createElement('div');
+        stressMessageDiv.classList.add('test_message');
+        stressMessageDiv.textContent = "Stress testing...";
+        chatBox.appendChild(stressMessageDiv);
         const interval = setInterval(() => {
             fetch('https://test-api-etok.onrender.com/test', {
                 method: "POST",
@@ -98,11 +102,8 @@ function testAPI() {
             .catch(error => {
                 console.error("Error: ", error);
                 clearInterval(interval);
-                const stressMessageDiv = document.createElement('div');
-                stressMessageDiv.classList.add('message');
                 stressMessageDiv.textContent = `${c - 1} requests were made before an error occurred.`;
-                chatBox.appendChild(stressMessageDiv);
             });
-        }, 300)
+        }, 100)
     }
 }
